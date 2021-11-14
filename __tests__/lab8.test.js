@@ -146,26 +146,8 @@ describe('Basic user flow for Website', () => {
     // At this point the item 'cart' in localStorage should be 
     // '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]', check to make sure it is
 
-    let cartMatches = false;
-    const bodyHandle = await page.$('body');
-    const storage = await page.evaluate((body) => body.window.localStorage, bodyHandle);
-    await bodyHandle.dispose();
-    // let storage = window.localStorage;
-    // console.log("TESTTEST");
-    console.log(storage.getItem('cart'));
-    // cartMatches = (storage.getItem('cart') == '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]');
-
-
-    // const html = await page.evaluate((body) => {
-    //     let storage = window.localStorage;
-    //     console.log(storage);
-    //     // console.log(window.localStorage.getItem('cart'));
-    //     console.log();
-    //     cartMatches = (storage.getItem('cart') == '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]');
-    // });
-    // await window.dispose();
-
-    expect(cartMatches).toBe(true);
+    const localStorage = await page.evaluate(() => localStorage.getItem('cart'));
+    expect(localStorage).toBe('[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]');
   });
 
   // Checking to make sure that if you remove all of the items from the cart that the cart
@@ -235,5 +217,9 @@ describe('Basic user flow for Website', () => {
     console.log('Checking the localStorage...');
     // TODO - Step 8
     // At this point he item 'cart' in localStorage should be '[]', check to make sure it is
+
+    const localStorage = await page.evaluate(() => localStorage.getItem('cart'));
+    expect(localStorage).toBe('[]');
+
   });
 });
